@@ -469,9 +469,12 @@ setInterval(getPidTotal,2000);
 	
 	console.log('getUserBalance '+wd);
 	
-	user_balance = wd;
+	user_balance = wd*1;
 	
-    document.getElementById("balance").innerText='提现'+wd*1;
+	const num = parseFloat(user_balance);
+	const scientificFixed = num.toExponential(2);
+	
+    document.getElementById("balance").innerText='提现'+scientificFixed;
  
   }
 
