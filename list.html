@@ -279,9 +279,12 @@ getOpenHis();
 	
 	console.log('getUserBalance '+wd);
 	
-	balance = wd;
+	user_balance = wd*1;
 	
-    document.getElementById("balance").innerText=''+wd;
+	const num = parseFloat(user_balance);
+	const scientificFixed = num.toExponential(2);
+	
+    document.getElementById("balance").innerText='提现'+scientificFixed;
  
   }
 
