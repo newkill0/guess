@@ -1,0 +1,767 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="MobileOptimized" content="240"/>
+<meta name="applicable-device"content="mobile">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>猜大小 赢大奖</title>
+<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/css.css?v=11"/>
+<script type="text/javascript" src="js/jq-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="js/clipboard.min.js"></script>
+<script type="text/javascript" src="js/ethers.min.js"></script>
+
+
+<!-- <script type="text/javascript" src="layer/mobile/layer.js"></script> -->
+<script type="text/javascript" src="layer/layer.js"></script>
+
+<script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="js/setfontsize.js"></script>
+<script type="text/javascript" src="js/abi.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+
+		
+</script>
+
+</head>
+
+<style>
+.layui-layer-title {
+    padding: 0 30px 0 20px;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    border-radius: 2px 2px 0 0;
+}
+
+
+.dz_list li .lic {
+    width: 3rem;
+    height: 2.84rem;
+    margin: 0 auto;
+    padding: 0.65rem 0 0 0.19rem;
+    font-size: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+
+		.selectAmount{display:none}
+		.selectAmount input[type=text] {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 300px;
+			font-size: 16px;
+			margin-bottom: 20px;
+		}
+
+		.selectAmount button {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 15px;
+			font-size: 16px;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		.selectAmount button:hover {
+			background-color: #3e8e41;
+		}
+		
+		
+
+</style>
+<body>
+<!--头部开始-->
+<div class="header">
+  <div class="header-fixed">
+    <div class="htop com_flex1">
+      <div class="peo"><img src="images/logo.jpg" /></div><em class="address-text" id="txt_curent_addr">0x...8888</em>
+	  
+	  
+	  <em class="address-text" style="display:inline-block;background:#f60;border:1px solid #eee;padding:0 30px;margin-left:10px;font-size:14px;"  class="balance" id="balance"></em>
+	  
+      <a href="javascript:dowithdraw();" class="ico_back" ></a>
+    </div>
+  </div>
+</div>
+<div class="swiper banner clear">
+  <div class="swiper-wrapper" onclick="do123()">
+    <div class="swiper-slide"><img src="images/banner.png" /></div>
+    <div class="swiper-slide"><img src="images/banner.png" /></div>
+  </div>
+  <div class="swiper-pagination"></div>
+  <script>
+    var banner = new Swiper(".banner", {
+      pagination: {
+        el: ".banner .swiper-pagination",
+        clickable: true,
+      },
+      effect : 'fade',
+      autoplay: {
+        pauseOnMouseEnter: true,
+        disableOnInteraction: false,
+      }
+    });
+	
+
+
+  </script>
+</div>
+<ul class="dz_list com_flex">
+  <li class="li1" onclick="dobig()"><div class="lic"><span id="bigTotal" class="bigTotal" style="font-size: 0.33rem; color: #fff;">...</span> K0</div></li>
+  <li class="li2" onclick="dosmall()"><div class="lic"><span id="smallTotal" class="smallTotal"  style="font-size: 0.33rem; color: #fff;">...</span> K0</div></li>
+</ul>
+<div class="swiper notice">
+  <ul class="swiper-wrapper">
+    <li class="swiper-slide"><em>恭喜<font>0X...5698</font>赢大奖 5000 K0</em></li>
+    <li class="swiper-slide"><em>恭喜<font>0X...A2D8</font>赢大奖 3000 K0</em></li>
+  </ul>
+</div>
+<script>
+  var notice = new Swiper(".notice", {
+	direction: "vertical",
+	autoplay: {
+	  pauseOnMouseEnter: true,
+	  disableOnInteraction: false,
+	},
+  });
+  
+  
+
+function do123(){
+
+layer.open({
+  title: [
+    '恭喜发财 发财秘诀',
+    'background-color:#ccc; color:#fff;'
+  ]
+  ,anim: 'up'
+  ,content: '买得早 拿得住，错过了上次的K0万倍 这次还要错过吗？'
+  ,btn: ['确认', '取消']
+});
+
+}
+
+function dobig(){  
+ 
+//打开之前先关闭所有 防止无法点击 
+layer.closeAll(); 
+
+layer.open({
+
+	title: [
+      '确认押大',
+	'padding: 0 30px 0 20px;    height: 50px;    line-height: 50px;    border-bottom: 1px solid #F0F0F0;    font-size: 14px;    color: #111;    overflow: hidden;    border-radius: 2px 2px 0 0; background-color:#eee; '
+    ]
+  
+  ,content:$('#selectAmount1')
+ 
+
+
+  ,btn: ['确定', '取消']
+  ,yes: function(index, layero){
+ 
+   //layer.msg(' 按钮【按钮一】的回');
+   
+
+  var amount =   document.getElementById("myTextbox1").value ;
+  
+ 
+
+  console.log('doBigAct amount:'+ amount );
+
+  
+
+  doBigAct(amount);   
+  
+ 
+   
+  }
+  ,btn2: function(index, layero){
+ 
+   //layer.msg(' 已取消 ');
+	layer.closeAll();      
+     $(".layui-layer-shade").remove();
+	
+    //return false 开启该代码可禁止点击该按钮关闭
+	
+  }
+  ,cancel: function(){ 
+ 
+   //layer.msg('取消');
+	layer.closeAll();    
+     $(".layui-layer-shade").remove();
+	
+    //return false 开启该代码可禁止点击该按钮关闭
+  }
+});
+
+
+ 
+} 
+
+
+function dosmall(){  
+
+
+layer.closeAll(); 
+  
+
+layer.open({
+
+  title: [
+    '确认押小',
+    'background-color:#eee; color:#111;'
+  ],
+  
+  content:$('#selectAmount0') 
+ 
+
+
+
+  ,btn: ['确定', '取消']
+  ,yes: function(index, layero){
+ 
+   //layer.msg(' 按钮【按钮一】的回');
+   
+  var amount =  document.getElementById("myTextbox0").value ;
+ 
+  console.log('doSmallAct amount:'+ amount );
+
+  doSmallAct(amount);   
+   
+  }
+  ,btn2: function(index, layero){
+ 
+   //layer.msg(' 已取消 ');
+
+	layer.closeAll();
+     $(".layui-layer-shade").remove();
+    
+    //return false 开启该代码可禁止点击该按钮关闭
+	
+  }
+  ,cancel: function(){ 
+     $(".layui-layer-shade").remove();
+ 
+   //layer.msg('取消');
+	layer.closeAll();    
+    //return false 开启该代码可禁止点击该按钮关闭
+  }
+});
+
+
+
+
+
+  
+}  
+
+
+
+
+
+
+ 
+</script>
+
+
+<script>
+ 
+  //创建一个Provider
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  
+  
+  const greet_addr="0x53ff4211E7040e28480617873F66493963aec462"; //0x53ff4211E7040e28480617873F66493963aec462
+  
+  
+  const token_addr="0x273525aFa57a4254784662191919775505000000";
+  
+
+  //const USDT_addr="0x55d398326f99059fF775485246999027B3197955";
+
+
+  
+ 
+
+ 
+  /**
+   * 连接metamask钱包，获取余额
+   */
+   
+  defaultAccount=0; 
+  balance = 0;
+  user_balance = 0;
+  allow_balance = 0;
+  async function initWallet() {
+ 
+    //向钱包发送授权请求
+    const accounts = await provider.send("eth_requestAccounts", []);
+ 
+    //获取账户余额信息
+    if (accounts && accounts.length > 0) {
+      defaultAccount = accounts[0];
+      let balance = ethers.utils.formatEther(await provider.getBalance(defaultAccount));
+      let network = await provider.getNetwork();
+	  
+	  var len = defaultAccount.length;
+	  console.log('defaultAccount len:'+len);
+	  var shortAddress = defaultAccount.substring(0, 4)+'...'+defaultAccount.substring(len-4);
+ 
+      //显示在界面上；
+      document.getElementById('txt_curent_addr').innerText = shortAddress;
+      //document.getElementById('txt_balance').innerText = balance;
+ 
+      console.log("当前账户地址：", defaultAccount);
+      console.log("金额：", balance);
+      console.log("Chain Info;", network.chainId, network.name);
+	  
+	  getUserBalance();
+	  
+	  getAllowBalance();
+	  
+	  getPidTotal()
+	  
+
+
+	// 获取地址的余额 
+	//provider.getBalance(defaultAccount).then((balance) => {
+	//  console.log('Address balance:', ethers.utils.formatEther(balance));
+	//}).catch((error) => {
+	//  console.log('Error:', error);
+	//});
+
+	  
+	  
+ 
+    }
+  }
+
+
+
+  /*
+    修改合约的状态变量
+  */
+  async function doApprove(){
+ 
+    //let str=document.getElementById('input_greeting').value;
+    //console.log(str);
+ 
+    const signer=provider.getSigner();
+    const token = new ethers.Contract(token_addr, TokenAbi, signer);
+ 
+    //与合约交互；
+ 
+	await  token.approve(greet_addr,"115792089237316195423570985008687907853269984665640564039457584007913129639935");
+  
+  
+  }
+  
+
+
+
+
+$(function() {
+
+
+setTimeout("initWallet()", 2800);
+
+
+setInterval(getPidTotal,2000);
+
+
+
+})			
+
+	
+ 
+  /**
+   *访问合约的查询函数
+   */
+  async function getBalance(){
+ 
+    const greet = new ethers.Contract(token_addr, TokenAbi, provider);
+ 
+    //与合约交互；
+    const wd = await greet.balanceOf(defaultAccount);
+	
+	balance = (wd/10**18).toFixed(0);
+	
+	console.log('K0 getBalance /10**18 :'+wd);
+	
+    //document.getElementById("balance").innerText=''+wd;
+ 
+  }
+
+
+  async function getKBalance(){
+ 
+    const greet = new ethers.Contract(token_addr, TokenAbi, provider);
+ 
+    //与合约交互；
+    const wd = await greet.balanceOf(defaultAccount);
+	
+	console.log('balance'+wd);
+	
+    document.getElementById("balance").innerText=''+wd;
+ 
+  }
+  
+  
+
+
+  async function getPidTotal(){
+ 
+    const greet = new ethers.Contract(greet_addr, greetAbi, provider);
+ 
+    //与合约交互；
+    const result = await greet.getPidTotal(0);
+	
+	console.log('getPidTotal'+result);
+	
+	if(result[0]<100){ result[0] = '00'+result[0]; }
+	
+	if(result[1]<100){ result[1] = '00'+result[1]; }
+	
+    document.getElementById("bigTotal").innerText=''+(result[1]/10**18).toFixed(0);
+    document.getElementById("smallTotal").innerText=''+(result[0]/10**18).toFixed(0);
+
+	getAllowBalance();
+	  
+	getUserBalance();
+	
+	getBalance();
+ 
+  }
+  
+  
+
+  /**
+   *访问合约的查询函数
+   */
+  async function getUserBalance(){
+ 
+    const greet = new ethers.Contract(greet_addr, TokenAbi, provider);
+ 
+    //与合约交互；
+    const wd = await greet.balanceOf(defaultAccount);
+	
+	console.log('getUserBalance '+wd);
+	
+	user_balance = wd;
+	
+    document.getElementById("balance").innerText=''+wd;
+ 
+  }
+
+
+  /**
+   *访问合约的查询函数 
+   */
+  async function getAllowBalance(){
+ 
+    const tokenCA = new ethers.Contract(token_addr, TokenAbi, provider);
+ 
+    //与合约交互；
+    const wd = await tokenCA.allowance(defaultAccount,greet_addr);
+	
+	console.log('getAllowBalance '+wd);
+	
+	allow_balance = wd;
+	
+	<!-- tokenCA.allowance(defaultAccount,greet_addr).then((balance) => { -->
+	  <!-- console.log('getAllowBalance balance:', ethers.utils.formatEther(balance)); -->
+	  <!-- allow_balance = balance; -->
+	  
+	  
+	<!-- }).catch((error) => { -->
+	  <!-- console.log('Error:', error); -->
+	<!-- }); -->
+
+ 
+  }
+
+ 
+
+async function doBigAct(amount){
+
+layer.closeAll();
+doOpenBid(1,ethers.utils.parseEther(amount));
+
+}
+
+
+async function doSmallAct(amount){
+
+layer.closeAll();
+
+doOpenBid(0,ethers.utils.parseEther(amount));
+
+
+}
+
+
+  async function doOpenBid(type,amount){
+ 
+    //let str=document.getElementById('input_greeting').value;
+    //console.log(str);
+ 
+    const signer=provider.getSigner();
+    const greet = new ethers.Contract(greet_addr, greetAbi, signer);
+
+    const tokenCA = new ethers.Contract(token_addr, TokenAbi, provider);
+ 
+    //与合约交互allowance
+    <!-- const wd = await tokenCA.allowance(defaultAccount,greet_addr);	 -->
+	<!-- console.log('getAllowBalance '+wd);	 -->
+	<!-- allow_balance = wd; -->
+
+	tokenCA.allowance(defaultAccount,greet_addr).then((balance) => {
+	console.log('getAllowBalance balance:', ethers.utils.formatEther(balance));
+	allow_balance = balance;
+	  
+	  
+	}).catch((error) => {
+	  console.log('Error:', error);
+	});
+
+
+	if(type==0){
+	
+	//layer.msg('确认押小');
+	
+	console.log('确认押小doBid:', type,amount);
+	
+	}else{
+	
+	//layer.msg('确认押大');
+	
+	console.log('确认押大doBid:', type,amount);
+	
+	}
+	
+ 
+	if(allow_balance<=0){
+	
+	console.log('allow_balance :', allow_balance+' approve...');
+	layer.msg('请先授权');
+	
+    const token = new ethers.Contract(token_addr, TokenAbi, signer); 
+
+	//await  token.approve(greet_addr,"115792089237316195423570985008687907853269984665640564039457584007913129639935");
+
+
+	// 调用智能合约的 doBid 方法
+	token.approve(greet_addr,"115792089237316195423570985008687907853269984665640564039457584007913129639935").then((tx) => {
+	  console.log('approve Transaction hash:', tx.hash);
+	  // 等待交易被确认后 提交新交易
+	  provider.waitForTransaction(tx.hash).then((receipt) => {
+	  
+		//greet.balanceOf(defaultAccount).then((balance) => {
+		//  console.log('Balance:', balance.toString());
+		//}).catch((error) => {
+		//  console.log('Error3:', error);
+		//});
+
+
+	// 调用智能合约的 doBid 方法
+	greet.doBid(type,amount).then((tx) => {
+	  console.log('doSmallAct Transaction hash:', tx.hash);
+	  // 等待交易被确认后查询目标地址余额
+	  provider.waitForTransaction(tx.hash).then((receipt) => {
+	  
+	  console.log(receipt);
+		
+		
+	  }).catch((error) => {
+		console.log('Error2:', error);
+	  });
+	}).catch((error) => {
+	  console.log('Error1:', error);
+	});
+
+
+	
+		
+	  }).catch((error) => {
+		console.log('Error2:', error);
+	  });
+	}).catch((error) => {
+	  console.log('Error1:', error);
+	});
+
+  	
+
+
+	
+	
+	}
+	
+	else
+
+	{
+	console.log('allow_balance :', allow_balance+' OK');
+	// 调用智能合约的 doBid 方法
+	greet.doBid(type,amount).then((tx) => {
+	  console.log('doSmallAct Transaction hash:', tx.hash);
+	  // 等待交易被确认后查询目标地址余额
+	  provider.waitForTransaction(tx.hash).then((receipt) => {
+		greet.balanceOf(defaultAccount).then((balance) => {
+		  console.log('Balance:', balance.toString());
+		}).catch((error) => {
+		  console.log('Error3:', error);
+		});
+	  }).catch((error) => {
+		console.log('Error2:', error);
+	  });
+	}).catch((error) => {
+	  console.log('Error1:', error);
+	});
+
+
+	}
+	
+	
+ 
+
+	<!-- greet.doBid(0,amount).then((res) => { -->
+	  <!-- console.log('doSmallAct:', res); -->
+	<!-- }).catch((error) => { -->
+	  <!-- console.log('Error:', error); -->
+	<!-- }); -->
+	
+	
+ 
+  }
+ 
+
+
+  
+  
+
+  async function dowithdraw(){
+ 
+    //let str=document.getElementById('input_greeting').value;
+    //console.log(str);
+ 
+    const signer=provider.getSigner();
+    const greet = new ethers.Contract(greet_addr, greetAbi, signer);
+ 
+    //与合约交互；
+	console.log('提现:', user_balance);
+ 
+    await  greet.withdraw(user_balance);
+ 
+ 
+  }
+
+  
+  
+ 
+  /*
+    修改合约的状态变量
+  */
+  async function doSetGreeting(){
+ 
+    let str=document.getElementById('input_greeting').value;
+    console.log(str);
+ 
+    const signer=provider.getSigner();
+    const greet = new ethers.Contract(greet_addr, greetAbi, signer);
+ 
+    //与合约交互；
+ 
+  await  greet.setGreeting(str);
+ 
+//监控事件，对结果进行处理
+  greet.on("SetGreet",(greeting,sender)=>{
+      if(greeting==str){
+        console.log("修改完成！",sender,greeting);
+        document.getElementById("txt_greet_log").innerText='greeting:'+greeting//"Greeting 已经修改成了："+greeting+"</br>修改者："+sender;
+      }
+    })
+ 
+  }
+ 
+</script>
+
+
+
+<div class="fnav">
+  <div class="fnav-fixed">
+    <ul>
+      <li><a href="index.html"><img src="images/n1.png" /></a></li>
+      <li><a href="javascript:dobig()"><img src="images/n2.png" /></a></li>
+      <li><a href="javascript:dosmall()"><img src="images/n3.png" /></a></li>
+      <li><a href="list.html"><img src="images/n4.png" /></a></li>
+    </ul>
+  </div>
+</div>
+</body>
+
+<div class="selectAmount" id="selectAmount0" style="z-index:29999999">
+	<h1>请选择猜小投入数量</h1>
+	<input type="text" id="myTextbox0" value="" class="width:98%">
+	<br>
+	<button onclick="changeText0('10')">10%</button>
+	<button onclick="changeText0('20')">20%</button>
+	<button onclick="changeText0('30')">30%</button>
+	<button onclick="changeText0('50')">50%</button>
+	
+</div>
+
+
+
+
+<div class="selectAmount" id="selectAmount1" style="z-index:29999999">
+	<h1>请选择猜大投入数量</h1>
+	<input type="text" id="myTextbox1" value="" class="width:98%">
+	<br>
+	<button onclick="changeText1('10')">10%</button>
+	<button onclick="changeText1('20')">20%</button>
+	<button onclick="changeText1('30')">30%</button>
+	<button onclick="changeText1('50')">50%</button>
+	
+</div>
+
+
+
+
+	<script>
+		function changeText0(newText) {
+			
+			var amount =  newText/100*balance ;
+			console.log(amount.toFixed(0));
+			document.getElementById("myTextbox0").value = (newText/100*balance).toFixed(0);
+		}
+
+		function changeText1(newText) {
+
+			var amount =  newText/100*balance  ;
+			console.log(amount.toFixed(0));			
+			document.getElementById("myTextbox1").value = (newText/100*balance).toFixed(0);
+		}		
+		
+	</script>
+	
+	
+
+</html>

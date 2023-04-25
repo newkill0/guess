@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>webapp</title>
+  <style>
+    body div {
+      margin-bottom: 30px;
+ 
+    }
+ 
+    .wallet, .interact_to_contract{
+      width: 450px;
+      margin-top: 30px;
+ 
+    }
+    .wallet button{
+      width: 100%;
+    }
+ 
+ 
+    .dogreet{
+      width: 100%;
+    }
+  </style>
+</head>
+ 
+<body>
+  <div class="wallet">
+    <button onclick="connect_to_metamask()">连接metamask钱包</button><br /><br>
+    账户地址：<span id="txt_curent_addr"></span><br /><br>
+    账户余额：<span id="txt_balance"></span><br />
+  </div>
+  <hr style="border:solid #987cb9;" width="100%">
+ 
+  <div class="interact_to_contract">
+    <button onclick="doGreet()" class="dogreet">Greeter合约greet函数</button><br /><br>
+    <input id="input_greeting"><button onclick="doSetGreeting()">Greeter合约setGreeting</button><br/><br>
+ 
+    <span id="txt_greet_log"></span>
+  </div>
+ 
+ 
+</body>
+ 
+</html>
+ 
+<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+ 
+<script>
+ 
+  //创建一个Provider
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const greet_addr="0x5fbdb2315678afecb367f032d93f642f64180aa3";
+ 
+ 
+  //Greeter合约的ABI
+  const greetAbi= [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_greeting",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "_greeting",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "SetGreet",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "greet",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_greeting",
+          "type": "string"
+        }
+      ],
+      "name": "setGreeting",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+ 
+ 
+ 
+  /**
+   * 连接metamask钱包，获取余额
+   */
+  async function connect_to_metamask() {
+ 
+    //向钱包发送授权请求
+    const accounts = await provider.send("eth_requestAccounts", []);
+ 
+    //获取账户余额信息
+    if (accounts && accounts.length > 0) {
+      let myAccountAddr = accounts[0];
+      let balance = ethers.utils.formatEther(await provider.getBalance(myAccountAddr));
+      let network = await provider.getNetwork();
+ 
+      //显示在界面上；
+      document.getElementById('txt_curent_addr').innerText = myAccountAddr;
+      document.getElementById('txt_balance').innerText = balance;
+ 
+      console.log("当前账户地址：", myAccountAddr);
+      console.log("金额：", balance);
+      console.log("Chain Info;", network.chainId, network.name);
+ 
+    }
+  }
+ 
+ 
+  /**
+   *访问合约的查询函数
+   */
+  async function doGreet(){
+ 
+    const greet = new ethers.Contract(greet_addr, greetAbi, provider);
+ 
+    //与合约交互；
+    const wd = await greet.greet();
+    document.getElementById("txt_greet_log").innerText='greeting:'+wd;
+ 
+  }
+ 
+  /*
+    修改合约的状态变量
+  */
+  async function doSetGreeting(){
+ 
+    let str=document.getElementById('input_greeting').value;
+    console.log(str);
+ 
+    const signer=provider.getSigner();
+    const greet = new ethers.Contract(greet_addr, greetAbi, signer);
+ 
+    //与合约交互；
+ 
+  await  greet.setGreeting(str);
+ 
+//监控事件，对结果进行处理
+  greet.on("SetGreet",(greeting,sender)=>{
+      if(greeting==str){
+        console.log("修改完成！",sender,greeting);
+        document.getElementById("txt_greet_log").innerText='greeting:'+greeting//"Greeting 已经修改成了："+greeting+"</br>修改者："+sender;
+      }
+    })
+ 
+  }
+ 
+</script>

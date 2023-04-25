@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="MobileOptimized" content="240"/>
+<meta name="applicable-device"content="mobile">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>开奖记录</title>
+<link rel="stylesheet" type="text/css" href="css/css.css?v=11"/>
+<script type="text/javascript" src="js/jq-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/ethers.min.js"></script>
+
+<script type="text/javascript" src="js/setfontsize.js"></script>
+</head>
+
+<script type="text/javascript" src="js/clipboard.min.js"></script>
+<script type="text/javascript" src="js/web3.min.js"></script>
+<script type="text/javascript" src="js/key.js?a=123423"></script>
+
+<script type="text/javascript" src="js/bignumber.min.js"></script>
+<script type="text/javascript" src="js/abi.js?a=111"></script>
+<script type="text/javascript" src="js/service.js"></script>
+<script type="text/javascript" src="js/airdrop.js?a=2111"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="layer/mobile/layer.js"></script>
+<!-- <script type="text/javascript" src="layer/layer.js"></script> -->
+
+<script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="js/setfontsize.js"></script>
+
+		<script type="text/javascript">
+			var web3js;
+			var web3;
+			
+			var getData;
+			
+			var defaultaccount='';
+			
+			var address='';
+			var id;
+			//pool 
+			var contract = '0x53ff4211E7040e28480617873F66493963aec462';
+			//approve LP
+			var contract2 = '0x945920BFc868fBe2F8CAd11c7702Ba5B2f5d9C27';
+			
+			var hdxCI;
+			var hdxCI2;
+			var timers={};
+			var flag = true;
+			var decimals = 6;
+			var minerFee = "0.001";
+			var acceptAddress = contract;
+			var bili = 500000000000;
+			var receive = 0;
+			$(function() {
+				
+				 
+				setTimeout("initWallet()", 2500);
+				//setTimeout("initWallet()", 2000);
+
+
+				//var t1 = window.setInterval("initWallet()",3000); 
+				//clearInterval 
+				//window.clearInterval(t1); 					
+				
+				var clipboard = new ClipboardJS('.copySpan');
+				clipboard.on('success', function(e) {
+					console.info('Action:', e.action);
+					console.info('Text:', e.text);
+					console.info('Trigger:', e.trigger);
+					e.clearSelection();
+					alert('Copy Success');
+				});
+				clipboard.on('error', function(e) {
+					console.error('Action:', e.action);
+					console.error('Trigger:', e.trigger);
+					alert('Copy fail');
+				});
+			})
+			
+			
+			
+			async function initWallet() {
+			   // alert(1);return;
+				console.log('initWallet');console.log(defaultaccount.length);
+				var web3Provider;
+				if(defaultaccount.length > 0){
+					//return;
+				}
+				if (window.ethereum) {
+					web3Provider = window.ethereum;
+					try {
+						//user allow
+						await window.ethereum.enable();
+						const accounts = await window.ethereum.send('eth_requestAccounts');
+						console.log('ADD:'+accounts[0])
+						
+					} catch (error) {
+						//not allow
+						//console.error("User denied account access")
+						//alert("Please allow");return;// please Auth
+					}
+				} else if (window.web3) {   //old MetaMask Legacy dapp browsers...
+					web3Provider = window.web3.currentProvider;
+				} else {
+					//web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+					alert("download MetaMask or imtoken or TP wallet OPEN in DAPP browsers");return;//'download MetaMask or imtoken wallet'
+				}
+				web3js = web3 = new Web3(web3Provider);//web3js instince
+				//alert(1);
+				var MyContract=new web3js.eth.Contract(greetAbi,contract);
+				hdxCI = MyContract.methods;
+
+
+
+
+				var MyContract2=new web3js.eth.Contract(abi2,contract2);
+				hdxCI2 = MyContract2.methods;
+
+
+				
+				var LastAccount='';
+				
+				var tim=setInterval(function(){
+					web3js.eth.getAccounts(function (error, result) {
+						if (!error){
+							if (LastAccount != result[0]){
+								LastAccount=result[0];
+								get_info( result[0]);
+							}
+						}
+					});	    
+				},1000);
+				
+ 
+			
+				
+				
+			}
+			
+			
+		var info={
+			'user':{},
+			'sys':{},
+		};	
+		var amount = 0;
+		
+		
+		function get_info(addr){
+			defaultaccount =addr; 		
+			
+			
+
+				//	$('.copySpan').attr('data-clipboard-text', defaultaccount);
+			
+					//document.getElementById('contract_address').innerHTML=contract;		
+			
+					//document.getElementById('my_address').value=defaultaccount;
+					
+					//doument.getElenemtById("name").value="123"; 
+					
+					//$("#my_address").val(defaultaccount);
+					
+					
+				//	document.getElementById('copySpan3').value=contract;
+				//	document.getElementById('copySpan3').innerHTML=contract;
+				//	$('#copySpan3').attr('data-clipboard-text',contract);		 			   
+					
+					
+					
+					var len = defaultaccount.length;console.log('len:'+len);
+					var shortAddress = defaultaccount.substring(0, 4)+'...'+defaultaccount.substring(len-4);
+					
+				//	 $("#my_address").val(shortAddress);
+					
+					 $('.address-text').html(shortAddress);
+					
+					
+				//	$('.unconnect').hide();
+				//	$('.account-basic-info, .account-basic-info-m').show();
+				//	$('.create_btn').removeClass('gray');
+					console.log(defaultaccount);//alert(defaultaccount);
+					
+					//$("input[name='address']").val(defaultaccount);
+					
+				//	document.getElementById('my_address').innerHTML=shortAddress;
+					
+					//document.getElementById('refreward_BNB').innerHTML= 0.005  ;
+					//document.getElementById('refreward_token').innerHTML= toThousands(100000);
+					
+                        //$('.web-day-money').html('128.6');
+                        
+                        //$('.user_max_product_name').html(shortAddress);
+                        
+                    
+                        var url = window.location.pathname;
+                        
+                        console.log(url);
+                        
+                        <!-- if(!GetRequest('username')&&window.location.pathname=='/user/'){ -->
+                            
+                            <!-- var ref = GetRequest('ref')?GetRequest('ref'):666; -->
+                            
+                            <!-- location.href='/user/?username='+defaultaccount+'&ref='+ref; -->
+                            
+                        <!-- } -->
+ 
+                    //==================getData===========================
+                    var getdata = hdxCI.getData(defaultaccount).call().then
+                    (
+                    
+                    function (res){
+                    
+                    console.log('getData  ' );
+					console.log( res);
+					
+					getData = res;
+ 
+					$("#LP_balance").val(parseFloat(web3js.utils.fromWei(getData[0][26], 'ether')-0.01).toFixed(2));
+					if($("#LP_balance").val()=='-0.01'||$("#LP_balance").val()=='-0.00'){$("#LP_balance").val('0');}
+					$(".my_balance").html(parseFloat(web3js.utils.fromWei(getData[0][26], 'ether')).toFixed(2));
+					$(".my_stake").html(parseFloat(web3js.utils.fromWei(getData[0][17], 'ether')).toFixed(2));
+					$(".all_stake").html(parseFloat(web3js.utils.fromWei(getData[0][10], 'ether')).toFixed(2));
+					$(".all_bonus").html(parseFloat(web3js.utils.fromWei(getData[0][24], 'ether')).toFixed(2));
+
+					$(".bonus").html(parseFloat(web3js.utils.fromWei((getData[0][24]*getData[0][17]/getData[0][10]).toString(), 'ether')).toFixed(2));
+                    
+                    }) 
+                    //==================getData===========================
+ 
+ 
+	 		
+					
+		}
+		
+		function approve(){
+		
+ 
+						
+		run_func2('approve','"'+contract+'","115792089237316195423570985008687907853269984665640564039457584007913129639935"',web3js.utils.toWei('0', 'ether'));
+
+
+		console.log('approve');
+		
+		//stake();
+
+ 
+		
+		}
+		
+		
+		function stake()	{
+		
+		if(getData[0][27]<1){
+		
+		approve();
+		
+		alert('Please Approve');
+		
+		return;
+		
+		}
+		
+		var amount =  web3js.utils.toWei($("#LP_balance").val(), 'ether') ;
+		
+		console.log('LP_balance:' + amount);
+		
+		run_func('stake2','"'+amount+'"',web3js.utils.toWei('0', 'ether'));
+		
+		
+		}	
+		
+		
+		
+		
+		
+		function doUnstake(){
+		
+		
+		type = 0; 
+		 
+		pay_amount = (type).toFixed(6)
+
+		console.log('pay_amount'+pay_amount);	
+						
+		run_func_noParm('unstake','',web3js.utils.toWei(pay_amount, 'ether'));
+
+
+		console.log('doUnstake ');
+
+ 
+		
+		}
+		
+
+
+
+		function doClaim(){
+		
+		
+ 
+						
+		run_func_noParm('doAward','',web3js.utils.toWei('0', 'ether'));
+
+
+		console.log('doAward:');
+
+ 
+		
+		}	
+		
+</script>
+<body>
+<!--头部开始-->
+<div class="header">
+  <div class="header-fixed">
+    <div class="htop com_flex1">
+      <div class="peo"><img src="images/peo.png" /></div><em  class="address-text"> </em>
+      <a href="javascript:;" class="ico_back"></a>
+    </div>
+  </div>
+</div>
+<div class="list_w">
+  <div class="top com_flex">
+    <em class="w1">序号</em>
+    <em class="w2">时间</em>
+    <em class="w3">开奖记录</em>
+  </div>
+  <ul>
+    <li class="com_flex">
+      <em class="w1">01</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w big">大</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">02</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w small">小</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">03</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w big">大</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">04</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w small">小</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">05</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w big">大</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">06</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w small">小</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">07</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w big">大</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">08</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w small">小</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">09</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w big">大</i></em>
+    </li>
+    <li class="com_flex">
+      <em class="w1">10</em>
+      <em class="w2">09:30</em>
+      <em class="w3"><i class="ico_w small">小</i></em>
+    </li>
+  </ul>
+</div>
+<div class="page"><a class="txt" href="#">上一页</a><a href="#">1</a><a href="#">2</a><a href="#">……</a><a href="#">20</a><a class="txt" href="#">下一页</a></div>
+<div class="fnav">
+  <div class="fnav-fixed">
+    <ul>
+      <li><a href="index.html"><img src="images/n1.png" /></a></li>
+      <li><a href="index.html"><img src="images/n2.png" /></a></li>
+      <li><a href="index.html"><img src="images/n3.png" /></a></li>
+      <li><a href="list.html"><img src="images/n4.png" /></a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
