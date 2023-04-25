@@ -509,15 +509,21 @@ const date = new Date(timestamp * 1000+8*3600*1000);
 const year = date.getFullYear();
 const month = date.getMonth() + 1;
 const day = date.getDate();
-const hours = date.getHours();
-const minutes = date.getMinutes();
-const seconds = date.getSeconds();
+const hours = checkTime(date.getHours());
+const minutes = checkTime(date.getMinutes());
+const seconds = checkTime(date.getSeconds());
 
 return  month+'-'+day+' '+ hours+':'+ minutes+':'+ seconds;
 
 } 
   
- 
+function checkTime(i){ //将0-9的数字前面加上0，例1变为01 
+ if(i<10) 
+ { 
+ i = "0" + i; 
+ } 
+ return i; 
+} 
  
 </script>
 
